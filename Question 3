@@ -2,13 +2,15 @@ import sqlite3
 def create_db():
       file = "Employee.db"
       try:
-      conn = sqlite3.connect(file)
-      print("Database Connected")
+            conn = sqlite3.connect(file)
+            print("Database Connected")
       except:
-      print("Database not Connected")
+            print("Database not Connected")
+            
       # Creating a cursor object using the
       # cursor() method
       cursor = conn.cursor()
+      
       # Creating table
       table = CREATE TABLE Employee (
       SL_NO INT(255) NOT NULL,
@@ -20,10 +22,11 @@ def create_db():
       )
       cursor.execute(table)
       print("Table is Ready")
+      
       cursor.execute(INSERT INTO Employee VALUES (1, 'Raja','Paul','M',1996-3-23,670000))
-
       cursor.execute(INSERT INTO Employee VALUES (2, 'Shaym','Roy','M',1995-3-13,670000))
       cursor.execute(INSERT INTO Employee VALUES (3, 'Rahul','Sen','M',1995-3-24,860000))
+      
       # Add a new column to geek table
       new_column = "ALTER TABLE Employee ADD COLUMN Age CHAR(25)"
       cursor.execute(new_column)

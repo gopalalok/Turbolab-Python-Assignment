@@ -1,43 +1,55 @@
 import heapq
 
 def repair_order(arr):
-      l = []
-      for i in range(len(arr)):
-      lst = []
-      lst.append(arr[i]['id'])
-      lst.append(arr[i]['deadline'])
-      lst.append(arr[i]['profit'])
-      l.append(lst)
-      n = len(l)
+    l = []
+    for i in range(len(arr)):
+        lst = []
+        lst.append(arr[i]['id'])
+        lst.append(arr[i]['deadline'])
+        lst.append(arr[i]['profit'])
+        l.append(lst)
+    n = len(l)
+ 
+    l.sort(key=lambda x: x[1])
+ 
+    # initialise the result array and maxHeap
+    result = []
+    maxHeap = []
+ 
 
-      l.sort(key=lambda x: x[1])
+    for i in range(n - 1, -1, -1):
+ 
 
-      # initialise the result array and maxHeap
-      result = []
-      maxHeap = []
+        if i == 0:
+            slots_available = l[i][1]
+        else:
+            slots_available = l[i][1] - l[i - 1][1]
+ 
+        heapq.heappush(maxHeap, (-l[i][2], l[i][1], l[i][0]))
+ 
+        while slots_available and maxHeap:
+ 
+            # get the job with max_profit
+            profit, deadline, job_id = heapq.heappop(maxHeap)
+ 
+            # reduce the slots
+            slots_available -= 1
+ 
+            # include the job in the result array
+            result.append([job_id, deadline])
+ 
+   
+    result.sort(key=lambda x: x[1])
+ 
+    for job in result:
+        print(job[0], end=" ")
+    print()
 
-      for i in range(n - 1, -1, -1):
+arr = [{'id': 'f1', 'deadline': 2, 'profit': 60},
+{'id': 'f2', 'deadline': 1, 'profit': 100},
+{'id': 'f3', 'deadline': 3, 'profit': 20},
+{'id': 'f4', 'deadline': 2, 'profit': 40},
+{'id': 'f5', 'deadline': 1, 'profit': 20}]
 
-      if i == 0:
-      slots_available = l[i][1]
-      else:
-      slots_available = l[i][1] - l[i - 1][1]
 
-      heapq.heappush(maxHeap, (-l[i][2], l[i][1], l[i][0]))
-
-      while slots_available and maxHeap:
-
-      # get the job with max_profit
-      profit, deadline, job_id = heapq.heappop(maxHeap)
-
-      # reduce the slots
-      slots_available -= 1
-
-      # include the job in the result array
-      result.append([job_id, deadline])
-
-      result.sort(key=lambda x: x[1])
-
-      for job in result:
-      print(job[0], end=" ")
-      print()
+repair_order(arr)

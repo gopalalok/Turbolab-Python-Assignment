@@ -1,0 +1,13 @@
+def reconstruct_string(input_string):
+      N = 3
+      final=[]
+      for word in input_string.split():
+      track=[]
+      for chara in word:
+      track.append(chara)
+      if track.count(chara)>N:
+      track.remove(chara)
+
+      final.append(track)
+
+      return ' '.join(["".join(item) for item in final])
